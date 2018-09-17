@@ -1,0 +1,34 @@
+.check-box {
+  padding: 5px 0;
+  position: relative;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+
+  .box {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    position: relative;
+    margin-right: 5px;
+  }
+
+  &.checked, &:hover {
+    color: #2129e2;
+  }
+
+  &.checked .box {
+    border: 1px solid #2129e2;
+  }
+
+  &.checked .box::before {
+    content: ' ';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    background-color: #2129e2;
+  }
+}

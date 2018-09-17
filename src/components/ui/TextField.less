@@ -1,0 +1,30 @@
+.text-field {
+  font-size: 13px;
+  font-weight: bold;
+  outline: none;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: #fff;
+  display: flex;
+  justify-items: center;
+
+  &:focus-within {
+    border-bottom: 3px solid #3139f2;
+  }
+
+  .symbol {
+    padding: 15px 5px 15px 10px;
+    color: #777;
+    font-size: 13px;
+  }
+
+  input {
+    display: block;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-weight: bold;
+    font-size: 14px;
+    flex-grow: 1;
+    width: 100%;
+  }
+}
