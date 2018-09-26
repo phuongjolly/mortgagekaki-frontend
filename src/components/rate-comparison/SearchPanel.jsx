@@ -11,6 +11,29 @@ import withLoader from '../common/connect';
 import formatCurrency from '../common/format';
 import CheckBox from '../ui/CheckBox';
 
+const PURCHASE = 'purchase';
+const INTEREST_TEXT = [
+  'This Year\'s Interest Rate',
+  'Next year\'s Interest Rate',
+  'Following year\'s Interest Rate',
+];
+
+function renderInterest(
+  id,
+  interest,
+  setInterestRate,
+) {
+  console.log('render interest');
+  return (
+    <div key={id} className="row">
+      <div className="label">{INTEREST_TEXT[id]}</div>
+      <TextField
+        value={`${interest}`}
+        onChange={value => setInterestRate(id, value)}
+      />
+    </div>
+  );
+}
 
 function SearchPanel({
   propertyTypes,
@@ -26,11 +49,13 @@ function SearchPanel({
   filter,
   load,
   type,
+  interests,
+  setInterestRate,
 }) {
   const loanTypes = ['FIXED', 'FLOAT'];
   let percent = purchasePrice !== 0 ? (100 * loanValue / purchasePrice) : 0;
   percent = parseInt(100 * percent, 10) / 100;
-  console.log(type);
+  const isNew = type === PURCHASE;
 
   return (
     <form className="search-panel">
@@ -53,31 +78,43 @@ function SearchPanel({
           onSelect={propertyType => load({ propertyType })}
         />
       </div>
-      <div className="row">
-        <div className="label">Purchase price</div>
-        <TextField
-          value={formatCurrency(purchasePrice)}
-          onChange={setPurchasePrice}
-        />
-      </div>
-      <div className="row">
-        <div className="label">Loan Value</div>
-        <div className="two columns">
+      {isNew && (
+        <div className="row">
+          <div className="label">Purchase price</div>
           <TextField
-            value={formatCurrency(loanValue)}
-            className="purchase-price"
-            onChange={setLoanValue}
-          />
-          <TextField
-            value={formatCurrency(percent)}
-            className="purchase-price-percent"
-            symbol="%"
-            onChange={setLoanValuePercent}
+            value={formatCurrency(purchasePrice)}
+            onChange={setPurchasePrice}
           />
         </div>
-      </div>
+      )}
+      {isNew ? (
+        <div className="row">
+          <div className="label">Loan Value</div>
+          <div className="two columns">
+            <TextField
+              value={formatCurrency(loanValue)}
+              className="purchase-price"
+              onChange={setLoanValue}
+            />
+            <TextField
+              value={formatCurrency(percent)}
+              className="purchase-price-percent"
+              symbol="%"
+              onChange={setLoanValuePercent}
+            />
+          </div>
+        </div>
+      ) : (
+        <div className="row">
+          <div className="label">Outstanding Balance</div>
+          <TextField
+            value={formatCurrency(loanValue)}
+            onChange={setLoanValue}
+          />
+        </div>
+      )}
       <div className="row">
-        <div className="label">Tenure</div>
+        <div className="label">{isNew ? 'Tenure' : 'Remaining Tenure'}</div>
         <TextField
           symbol="Years"
           className="duration"
@@ -85,6 +122,9 @@ function SearchPanel({
           onChange={setLoanDuration}
         />
       </div>
+      {!isNew && (
+        interests.map((interest, index) => renderInterest(index, interest, setInterestRate))
+      )}
       <div className="row">
         <div className="label">Prefered Loan Type</div>
         {loanTypes.map(item => (
@@ -121,6 +161,8 @@ SearchPanel.propTypes = {
   togglePropertyTypes: PropTypes.func.isRequired,
   setLoanDuration: PropTypes.func.isRequired,
   load: PropTypes.func.isRequired,
+  interests: PropTypes.arrayOf(PropTypes.any).isRequired,
+  setInterestRate: PropTypes.func.isRequired,
 };
 
 SearchPanel.defaultProps = {
@@ -137,9 +179,9 @@ function loadData({
   if (!isLoading) {
     if (result.length === 0) {
       load({
-        type: type === 'purchase' ? 'NEW' : 'BOTH',
+        type: type === PURCHASE ? 'NEW' : 'BOTH',
       });
-    } else if (type === 'purchase') {
+    } else if (type === PURCHASE) {
       if (filter.type !== 'NEW') {
         load({
           type: 'NEW',
@@ -150,7 +192,6 @@ function loadData({
         type: 'BOTH',
       });
     }
-
   }
 }
 

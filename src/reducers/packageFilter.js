@@ -7,6 +7,11 @@ const initialState = {
   isLoading: false,
   duration: 25,
   result: [],
+  interests: [
+    2.0,
+    2.0,
+    2.0,
+  ],
   filter: {
     propertyType: 'HC',
     type: 'NEW',
@@ -21,12 +26,22 @@ const SET_PURCHASE_PRICE = 'packageFilter/SetPurchasePrice';
 const SET_LOAN_VALUE = 'packageFilter/SetLoanValue';
 const TOGGLE_PROPERTY_TYPES = 'packageFilter/TogglePropertyTypes';
 const SET_LOAN_DURATION = 'packageFilter/SetLoanDuration';
+const SET_INTEREST_RATE = 'packageFilter/SetInterestRate';
 
 /**
  * the package filter reducer
  */
 function packageFilterReducer(state = initialState, action) {
   switch (action.type) {
+    case SET_INTEREST_RATE: {
+      const { id, interestRate } = action;
+      const { interests } = state;
+
+      return {
+        ...state,
+        interests: interests.map((value, index) => (index === id ? interestRate : value)),
+      };
+    }
     case SET_LOAN_FILTER: {
       const { filter } = action;
 
@@ -152,13 +167,21 @@ export const packageFilterActionCreator = {
     return (dispatch, getState) => {
       const state = getState();
       const loanValue = convertToNumber(value);
+      const { type } = state.packageFilter.filter;
       const { purchasePrice } = state.packageFilter;
-      const maxValue = purchasePrice * MAX_PERCENT / 100.0;
+      const maxValue = type === 'NEW' ? purchasePrice * MAX_PERCENT / 100.0 : 100000000;
 
       dispatch({
         type: SET_LOAN_VALUE,
         loanValue: Math.min(loanValue, maxValue),
       });
+    };
+  },
+  setInterestRate(id, interestRate) {
+    return {
+      type: SET_INTEREST_RATE,
+      id,
+      interestRate,
     };
   },
   setLoanValuePercent(percentValue) {
