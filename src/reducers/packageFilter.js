@@ -164,7 +164,7 @@ export const packageFilterActionCreator = {
   setLoanValuePercent(percentValue) {
     return (dispatch, getState) => {
       const state = getState();
-      let percent = percentValue;
+      let percent = convertToNumber(percentValue);
       const { purchasePrice } = state.packageFilter;
 
       if (percentValue > MAX_PERCENT) {
