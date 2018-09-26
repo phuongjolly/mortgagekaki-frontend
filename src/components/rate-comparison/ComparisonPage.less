@@ -12,10 +12,6 @@
       padding: 20px;
       background-color: #fff;
       min-height: 600px;
-
-      h1 {
-        margin: 0 0 10px;
-      }
     }
   }
 }
@@ -28,6 +24,10 @@
       .result-panel {
         background-color: transparent;
 
+        h1 {
+          padding: 20px 0;
+        }
+
         .customize.button {
           display: block;
         }
@@ -35,8 +35,10 @@
 
       .search-panel {
         position: fixed;
-        display: none;
-        top: 0;
+        display: block;
+        top: 100%;
+        transition-duration: 0.25s;
+        transform: scale(0.5);
         left: 0;
         width: 100%;
         height: 100%;
@@ -54,10 +56,12 @@
           width: 100%;
           padding: 20px;
           color: #fff;
+          z-index: 100px;
         }
 
         &.show-filter {
-          display: block;
+          top: 0;
+          transform: none;
         }
 
         .apply-button {
