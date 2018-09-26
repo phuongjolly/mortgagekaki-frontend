@@ -43,7 +43,7 @@ function renderRate(id, rate) {
         {formatDecimal(rate.rateValue)}
         <sup>%</sup>
         <div className="description">
-          Per annual
+          Per annum
         </div>
       </div>
       <div className="monthly-payment number">
@@ -80,7 +80,7 @@ function renderItem(item, loanValue, duration) {
           <sup>$</sup>
           {formatCurrency(total)}
           <div className="description">
-            In total
+            total interest
           </div>
         </div>
         <a href="/apply" className="apply button">
