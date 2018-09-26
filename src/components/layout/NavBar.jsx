@@ -5,11 +5,11 @@ export default function NavBar() {
   return (
     <nav className="nav-bar">
       <div className="brand">
-        Mortgage Kaki
-      </div>
-      <div className="actions">
-        <a href="/login">Login</a>
-        <a href="/register">Register</a>
+        <img
+          alt="logo"
+          src="/bank-logos/MortgageKaki.png"
+          className="logo"
+        />
       </div>
     </nav>
   );
