@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import './ResultPanel.less';
 import formatCurrency, { formatDecimal } from '../common/format';
 import calculateLoans from '../services/loanService';
+import { packageFilterActionCreator } from '../../reducers/packageFilter';
 
 function renderRate(id, rate) {
   return (
@@ -102,13 +103,24 @@ function ResultPanel({
   result,
   loanValue,
   duration,
+  toggleFilter,
 }) {
   const data = calculateLoans(loanValue, duration, result);
   data.sort((a, b) => a.totalInterest - b.totalInterest);
 
   return isLoading ? renderLoading() : (
     <div className="result-panel">
-      <h1>All Results</h1>
+      <div className="all-result-header">
+        <h1>All Results</h1>
+        <div
+          role="presentation"
+          className="customize button"
+          onClick={toggleFilter}
+        >
+          Customize
+          <i className="fa fa-sliders-h" />
+        </div>
+      </div>
       {renderHeader()}
       {data.map(item => renderItem(item, loanValue, duration))}
       <div className="footer">
@@ -127,6 +139,7 @@ ResultPanel.propTypes = {
   result: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   loanValue: PropTypes.number.isRequired,
   duration: PropTypes.number.isRequired,
+  toggleFilter: PropTypes.func.isRequired,
 };
 
 
@@ -134,4 +147,5 @@ export default connect(
   appState => ({
     ...appState.packageFilter,
   }),
+  packageFilterActionCreator,
 )(ResultPanel);

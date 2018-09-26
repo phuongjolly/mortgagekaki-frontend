@@ -51,6 +51,8 @@ function SearchPanel({
   type,
   interests,
   setInterestRate,
+  showFilter,
+  toggleFilter,
 }) {
   const loanTypes = ['FIXED', 'FLOAT'];
   let percent = purchasePrice !== 0 ? (100 * loanValue / purchasePrice) : 0;
@@ -58,7 +60,7 @@ function SearchPanel({
   const isNew = type === PURCHASE;
 
   return (
-    <form className="search-panel">
+    <form className={`search-panel ${showFilter && 'show-filter'}`}>
       <h2>Personalize results</h2>
       <div className="loan-types">
         <NavLink to="/search/purchase" activeClassName="active">
@@ -139,6 +141,15 @@ function SearchPanel({
           </CheckBox>
         ))}
       </div>
+      <div className="row">
+        <div
+          role="presentation"
+          onClick={toggleFilter}
+          className="button apply-button"
+        >
+          Apply
+        </div>
+      </div>
     </form>
   );
 }
@@ -163,6 +174,8 @@ SearchPanel.propTypes = {
   load: PropTypes.func.isRequired,
   interests: PropTypes.arrayOf(PropTypes.any).isRequired,
   setInterestRate: PropTypes.func.isRequired,
+  showFilter: PropTypes.bool.isRequired,
+  toggleFilter: PropTypes.func.isRequired,
 };
 
 SearchPanel.defaultProps = {

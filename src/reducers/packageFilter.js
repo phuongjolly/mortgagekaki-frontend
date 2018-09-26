@@ -12,6 +12,7 @@ const initialState = {
     2.0,
     2.0,
   ],
+  showFilter: true,
   filter: {
     propertyType: 'HC',
     type: 'NEW',
@@ -27,6 +28,7 @@ const SET_LOAN_VALUE = 'packageFilter/SetLoanValue';
 const TOGGLE_PROPERTY_TYPES = 'packageFilter/TogglePropertyTypes';
 const SET_LOAN_DURATION = 'packageFilter/SetLoanDuration';
 const SET_INTEREST_RATE = 'packageFilter/SetInterestRate';
+const TOGGLE_FILTER = 'packageFilter/toggleFilter';
 
 /**
  * the package filter reducer
@@ -105,6 +107,13 @@ function packageFilterReducer(state = initialState, action) {
         showingPropertyTypes: !state.showingPropertyTypes,
       };
     }
+    case TOGGLE_FILTER: {
+      return {
+        ...state,
+        showFilter: !state.showFilter,
+      };
+    }
+
     default:
       return state;
   }
@@ -219,4 +228,9 @@ export const packageFilterActionCreator = {
       duration,
     };
   },
+  toggleFilter() {
+    return {
+      type: TOGGLE_FILTER,
+    };
+  }
 };
