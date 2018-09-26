@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
 import './SearchPanel.less';
 import DropDownList from '../ui/DropDownList';
@@ -24,21 +25,23 @@ function SearchPanel({
   setLoanDuration,
   filter,
   load,
+  type,
 }) {
   const loanTypes = ['FIXED', 'FLOAT'];
   let percent = purchasePrice !== 0 ? (100 * loanValue / purchasePrice) : 0;
   percent = parseInt(100 * percent, 10) / 100;
+  console.log(type);
 
   return (
     <form className="search-panel">
       <h2>Personalize results</h2>
       <div className="loan-types">
-        <a href="/purchase" className="active">
+        <NavLink to="/search/purchase" activeClassName="active">
           Purchase
-        </a>
-        <a href="/purchase">
+        </NavLink>
+        <NavLink to="/search/refinance" activeClassName="active">
           Refinance
-        </a>
+        </NavLink>
       </div>
       <div className="row">
         <div className="label">Property Type</div>
@@ -101,6 +104,7 @@ function SearchPanel({
 }
 
 SearchPanel.propTypes = {
+  type: PropTypes.string.isRequired,
   propertyTypes: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
@@ -123,8 +127,31 @@ SearchPanel.defaultProps = {
   propertyTypes: [],
 };
 
-function loadData({ load }) {
-  load();
+function loadData({
+  load,
+  type,
+  filter,
+  isLoading,
+  result,
+}) {
+  if (!isLoading) {
+    if (result.length === 0) {
+      load({
+        type: type === 'purchase' ? 'NEW' : 'BOTH',
+      });
+    } else if (type === 'purchase') {
+      if (filter.type !== 'NEW') {
+        load({
+          type: 'NEW',
+        });
+      }
+    } else if (filter.type !== 'BOTH') {
+      load({
+        type: 'BOTH',
+      });
+    }
+
+  }
 }
 
 export default connect(

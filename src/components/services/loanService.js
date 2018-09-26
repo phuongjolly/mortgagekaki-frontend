@@ -44,6 +44,5 @@ export default function calculateLoans(
   result,
 ) {
   const data = result.map(item => calculateLoan(loanValue, duration, item));
-  console.log(data);
   return data;
 }

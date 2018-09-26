@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { withRouter } from 'react-router';
 /**
  * Call a load function to load data
  * @param {React.Component} Component the component to change
@@ -12,6 +12,10 @@ export default function withLoader(Component, load) {
       load(this.props);
     }
 
+    componentWillReceiveProps(newProps) {
+      load(newProps);
+    }
+
     render() {
       return (
         <Component {...this.props} />
@@ -19,5 +23,5 @@ export default function withLoader(Component, load) {
     }
   }
 
-  return NewComponent;
+  return withRouter(NewComponent);
 }
