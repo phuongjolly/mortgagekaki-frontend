@@ -104,7 +104,8 @@ function ResultPanel({
   duration,
 }) {
   const data = calculateLoans(loanValue, duration, result);
- 
+  data.sort((a, b) => a.totalInterest - b.totalInterest);
+
   return isLoading ? renderLoading() : (
     <div className="result-panel">
       <h1>All Results</h1>
@@ -112,7 +113,9 @@ function ResultPanel({
       {data.map(item => renderItem(item, loanValue, duration))}
       <div className="footer">
         Displaying
+        {' '}
         {result.length}
+        {' '}
         results
       </div>
     </div>
