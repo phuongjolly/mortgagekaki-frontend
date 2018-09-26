@@ -64,11 +64,13 @@ function packageFilterReducer(state = initialState, action) {
     }
     case SET_PURCHASE_PRICE: {
       const { purchasePrice } = action;
-      const maxValue = purchasePrice * MAX_PERCENT / 100.0;
-
+      const oldPurchasePrice = state.purchasePrice;
+      const percent = oldPurchasePrice === 0.0 ? 0.0 : (state.loanValue / oldPurchasePrice);
+      const loanValue = percent * purchasePrice;
+      
       return {
         ...state,
-        loanValue: Math.min(maxValue, state.loanValue),
+        loanValue,
         purchasePrice,
       };
     }
