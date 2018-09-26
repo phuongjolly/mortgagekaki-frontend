@@ -67,7 +67,7 @@ function packageFilterReducer(state = initialState, action) {
       const oldPurchasePrice = state.purchasePrice;
       const percent = oldPurchasePrice === 0.0 ? 0.0 : (state.loanValue / oldPurchasePrice);
       const loanValue = percent * purchasePrice;
-      
+
       return {
         ...state,
         loanValue,

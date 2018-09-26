@@ -4,33 +4,7 @@ import PropTypes from 'prop-types';
 
 import './ResultPanel.less';
 import formatCurrency, { formatDecimal } from '../common/format';
-
-const YEARS = 3;
-
-function calculteRates(rates, loanValue, duration) {
-  const results = [];
-  let principal = loanValue;
-  const perYear = loanValue / duration;
-  const perMonth = perYear / 12;
-
-  for (let i = 0; i < YEARS; i += 1) {
-    const rate = rates[i];
-    const baseRate = (rate || {}).baseRate || {};
-    const rateValue = (baseRate.value || 0.0) + rate.absoluteRate;
-    const monthPay = perMonth + Math.round(principal * rateValue / 12 / 100.0);
-    const yearPay = monthPay * 12;
-
-    principal -= yearPay;
-
-    results.push({
-      rateValue,
-      yearPay,
-      monthPay,
-    });
-  }
-
-  return results;
-}
+import calculateLoans from '../services/loanService';
 
 function renderRate(id, rate) {
   return (
@@ -40,7 +14,7 @@ function renderRate(id, rate) {
         &nbsp;YEAR
       </div>
       <div className="interest number">
-        {formatDecimal(rate.rateValue)}
+        {formatDecimal(rate.rate)}
         <sup>%</sup>
         <div className="description">
           Per annum
@@ -49,7 +23,7 @@ function renderRate(id, rate) {
       <div className="monthly-payment number">
         <b>
           $
-          {formatCurrency(rate.monthPay)}
+          {formatCurrency(rate.monthlyBalance)}
         </b>
         <div className="description">
           Principal &amp; Interest
@@ -59,9 +33,8 @@ function renderRate(id, rate) {
   );
 }
 
-function renderItem(item, loanValue, duration) {
-  const rates = calculteRates(item.rates, loanValue, duration);
-  const total = rates.reduce((sum, rate) => sum + rate.yearPay, 0.0);
+function renderItem(item) {
+  const { rates } = item;
 
   return (
     <div key={item.id} className="rate-display">
@@ -78,7 +51,7 @@ function renderItem(item, loanValue, duration) {
       <div className="summary">
         <div className="interest number">
           <sup>$</sup>
-          {formatCurrency(total)}
+          {formatCurrency(item.totalInterest)}
           <div className="description">
             total interest
           </div>
@@ -130,11 +103,13 @@ function ResultPanel({
   loanValue,
   duration,
 }) {
+  const data = calculateLoans(loanValue, duration, result);
+ 
   return isLoading ? renderLoading() : (
     <div className="result-panel">
       <h1>All Results</h1>
       {renderHeader()}
-      {result.map(item => renderItem(item, loanValue, duration))}
+      {data.map(item => renderItem(item, loanValue, duration))}
       <div className="footer">
         Displaying
         {result.length}
