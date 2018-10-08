@@ -13,6 +13,19 @@
       background-color: #fff;
       min-height: 600px;
     }
+
+    .loading {
+      display: flex;
+      flex-flow: row;
+      align-items: center;
+      justify-content: space-around;
+      width: 100%;
+    }
+
+    .footer {
+      color: #fff;
+      background-color: #999;
+    }
   }
 }
 
@@ -38,6 +51,7 @@
         display: block;
         top: 100%;
         transition-duration: 0.25s;
+        -webkit-overflow-scrolling: touch;
         transform: scale(0.5);
         left: 0;
         width: 100%;
@@ -49,14 +63,14 @@
           margin-top: 60px;
         }
         h2 {
-          background-color: #20cb7e;
+          background-color: #ADD8E6;
           position: fixed;
           top: 0px;
           left: 0px;
           width: 100%;
           padding: 20px;
           color: #fff;
-          z-index: 100px;
+          z-index: 100;
         }
 
         &.show-filter {
@@ -69,7 +83,7 @@
           display: block;
           text-align: center;
           padding: 10px;
-          background-color: #20cb7e;
+          background-color: #ADD8E6;
           color: #fff;
 
           cursor: pointer;

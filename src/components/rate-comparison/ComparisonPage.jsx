@@ -10,7 +10,7 @@ export default function ComparisonPage({ match }) {
     <div className="comparison-page">
       <div className="wrapper">
         <SearchPanel type={type} />
-        <ResultPanel />
+        <ResultPanel type={type} />
       </div>
     </div>
   );

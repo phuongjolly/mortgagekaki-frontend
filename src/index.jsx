@@ -12,6 +12,7 @@ import './index.less';
 import Ads from './components/layout/Ads';
 import ComparisonPage from './components/rate-comparison/ComparisonPage';
 import store from './stores/store';
+import Footer from './components/layout/Footer';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="/search/:type" component={ComparisonPage} />
             <Redirect to="/search/purchase" />
           </Switch>
+          <Footer />
         </div>
       </BrowserRouter>
     </Provider>

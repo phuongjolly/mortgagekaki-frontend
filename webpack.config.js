@@ -8,7 +8,7 @@ const config = {
   mode: 'development',
   entry: ['babel-polyfill', path.resolve(__dirname, 'src/index.jsx')],
   output: {
-    filename: 'app.bundle.js',
+    filename: 'app-0.2.bundle.js',
     path: target,
   },
   resolve: {

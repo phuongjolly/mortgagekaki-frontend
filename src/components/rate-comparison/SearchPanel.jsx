@@ -29,6 +29,8 @@ function renderInterest(
       <div className="label">{INTEREST_TEXT[id]}</div>
       <TextField
         value={`${interest}`}
+        symbol="%"
+        className="duration"
         onChange={value => setInterestRate(id, value)}
       />
     </div>
