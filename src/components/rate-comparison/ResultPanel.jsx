@@ -5,7 +5,7 @@ import ReactLoading from 'react-loading';
 
 import './ResultPanel.less';
 import formatCurrency, { formatDecimal } from '../common/format';
-import calculateLoans from '../services/loanService';
+import calculateLoans, { calculateInterest } from '../services/loanService';
 import { packageFilterActionCreator } from '../../reducers/packageFilter';
 
 const REFINANCE = 'refinance';
@@ -37,7 +37,7 @@ function renderRate(id, rate) {
   );
 }
 
-function renderItem(item) {
+function renderItem(item, type) {
   const { rates } = item;
 
   return (
@@ -57,7 +57,7 @@ function renderItem(item) {
           <sup>$</sup>
           {formatCurrency(item.totalInterest)}
           <div className="description">
-            total interest
+            {type === REFINANCE ? 'total savings' : 'total interest'}
           </div>
         </div>
         <a href="/apply" className="apply button">
@@ -114,10 +114,24 @@ function ResultPanel({
   loanValue,
   duration,
   toggleFilter,
+  interests,
   type,
 }) {
-  const data = calculateLoans(loanValue, duration, result);
-  data.sort((a, b) => a.totalInterest - b.totalInterest);
+  let data = calculateLoans(loanValue, duration, result);
+
+  if (type === REFINANCE) {
+    const currentLoan = calculateInterest(loanValue, duration, interests);
+    data = data.map(item => ({
+      ...item,
+      totalInterest: currentLoan.totalInterest - item.totalInterest,
+    })).filter(
+      item => item.totalInterest > 0,
+    );
+
+    data.sort((a, b) => b.totalInterest - a.totalInterest);
+  } else {
+    data.sort((a, b) => a.totalInterest - b.totalInterest);
+  }
 
   return isLoading ? renderLoading('spinningBubbles', '#20cb7e') : (
     <div className="result-panel">
@@ -133,7 +147,7 @@ function ResultPanel({
         </div>
       </div>
       {renderHeader(type)}
-      {data.map(item => renderItem(item, loanValue, duration))}
+      {data.map(item => renderItem(item, type))}
       <div className="footer">
         Displaying
         {' '}
@@ -152,6 +166,7 @@ ResultPanel.propTypes = {
   duration: PropTypes.number.isRequired,
   toggleFilter: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
+  interests: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
 
