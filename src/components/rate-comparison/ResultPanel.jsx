@@ -148,13 +148,21 @@ function ResultPanel({
       </div>
       {renderHeader(type)}
       {data.map(item => renderItem(item, type))}
-      <div className="footer">
-        Displaying
-        {' '}
-        {result.length}
-        {' '}
-        results
-      </div>
+      {data.length > 0 ? (
+        <div className="footer">
+          Displaying
+          {' '}
+          {result.length}
+          {' '}
+          results
+        </div>
+      ) : (
+        <div className="empty-state">
+          {type === REFINANCE
+            ? 'Thank you for your enquiry. Currently, there is no better package than the one you are having.\nYou can choose to remain with current bank package.'
+            : 'There is no result for your enquiry at the moment'}
+        </div>
+      )}
     </div>
   );
 }
