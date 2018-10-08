@@ -157,9 +157,16 @@ export const packageFilterActionCreator = {
       });
 
       try {
-        const response = await fetch(`/api/v1/packages?type=${encodeURIComponent(newFilter.type)}`
-            + `&propertyType=${encodeURIComponent(newFilter.propertyType)}`
-            + `&loanType=${newFilter.loanType}`);
+        let endpoint = `/api/v1/packages?type=${encodeURIComponent(newFilter.type)}`
+          + `&propertyType=${encodeURIComponent(newFilter.propertyType)}`
+          + `&loanType=${newFilter.loanType}`;
+
+        if (newFilter.lockIn !== 'Any' && newFilter.type !== 'NEW') {
+          endpoint = `${endpoint}&lockIn=${newFilter.lockIn}`;
+        }
+
+        const response = await fetch(endpoint);
+
 
         const result = await response.json();
 
