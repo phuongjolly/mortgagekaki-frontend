@@ -30,7 +30,7 @@ function renderRate(id, rate) {
           {formatCurrency(rate.monthlyBalance)}
         </b>
         <div className="description">
-          Principal &amp; Interest
+          Monthly Installment
         </div>
       </div>
     </div>
@@ -89,7 +89,7 @@ function renderHeader(type) {
       {type === REFINANCE ? <div className="total">Total Savings</div>
         : (
           <div className="total">
-            Total Interest for
+            Interest for
             {' '}
             <span>3</span>
             {' '}

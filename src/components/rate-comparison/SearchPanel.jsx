@@ -12,10 +12,26 @@ import formatCurrency from '../common/format';
 import CheckBox from '../ui/CheckBox';
 
 const PURCHASE = 'purchase';
+
 const INTEREST_TEXT = [
   'This Year\'s Interest Rate',
   'Next year\'s Interest Rate',
   'Following year\'s Interest Rate',
+];
+
+const LockInTypes = [
+  {
+    id: 'Any',
+    name: 'Any',
+  },
+  {
+    id: '0',
+    name: 'No Lock-in',
+  },
+  ...[1, 2, 3, 4, 5].map(year => ({
+    id: `${year}`,
+    name: `${year} Year`,
+  })),
 ];
 
 function renderInterest(
@@ -55,6 +71,8 @@ function SearchPanel({
   setInterestRate,
   showFilter,
   toggleFilter,
+  showingLockInTypes,
+  toggleShowLockInTypes,
 }) {
   const loanTypes = ['FIXED', 'FLOAT'];
   let percent = purchasePrice !== 0 ? (100 * loanValue / purchasePrice) : 0;
@@ -129,6 +147,19 @@ function SearchPanel({
       {!isNew && (
         interests.map((interest, index) => renderInterest(index, interest, setInterestRate))
       )}
+      {!isNew && (
+        <div className="row">
+          <div className="label">Lock In</div>
+          <DropDownList
+            items={LockInTypes}
+            showing={showingLockInTypes}
+            toggle={toggleShowLockInTypes}
+            selectedItem={filter.lockIn}
+            onSelect={lockIn => load({ lockIn })}
+          />
+          <div className="label">Please consider penalty fee, if applicable</div>
+        </div>
+      )}
       <div className="row">
         <div className="label">Prefered Loan Type</div>
         {loanTypes.map(item => (
@@ -178,6 +209,8 @@ SearchPanel.propTypes = {
   setInterestRate: PropTypes.func.isRequired,
   showFilter: PropTypes.bool.isRequired,
   toggleFilter: PropTypes.func.isRequired,
+  showingLockInTypes: PropTypes.bool.isRequired,
+  toggleShowLockInTypes: PropTypes.func.isRequired,
 };
 
 SearchPanel.defaultProps = {

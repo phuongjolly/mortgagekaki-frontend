@@ -4,19 +4,21 @@ const initialState = {
   purchasePrice: 1000000,
   loanValue: 750000,
   showingPropertyTypes: false,
+  showingLockInTypes: false,
   isLoading: false,
   duration: 25,
   result: [],
   interests: [
-    2.0,
-    2.0,
-    2.0,
+    2.8,
+    2.8,
+    2.8,
   ],
   showFilter: true,
   filter: {
     propertyType: 'HC',
     type: 'NEW',
     loanType: 'FLOAT',
+    lockIn: 'Any',
   },
 };
 
@@ -29,6 +31,7 @@ const TOGGLE_PROPERTY_TYPES = 'packageFilter/TogglePropertyTypes';
 const SET_LOAN_DURATION = 'packageFilter/SetLoanDuration';
 const SET_INTEREST_RATE = 'packageFilter/SetInterestRate';
 const TOGGLE_FILTER = 'packageFilter/toggleFilter';
+const TOGGLE_SHOW_LOCK_IN_TYPES = 'packageFilter/ToggleShowLockInTypes';
 
 /**
  * the package filter reducer
@@ -49,6 +52,7 @@ function packageFilterReducer(state = initialState, action) {
 
       return {
         ...state,
+        showingLockInTypes: false,
         isLoading: true,
         showingPropertyTypes: false,
         filter,
@@ -111,6 +115,13 @@ function packageFilterReducer(state = initialState, action) {
       return {
         ...state,
         showFilter: !state.showFilter,
+      };
+    }
+
+    case TOGGLE_SHOW_LOCK_IN_TYPES: {
+      return {
+        ...state,
+        showingLockInTypes: !state.showingLockInTypes,
       };
     }
 
@@ -232,5 +243,10 @@ export const packageFilterActionCreator = {
     return {
       type: TOGGLE_FILTER,
     };
-  }
+  },
+  toggleShowLockInTypes() {
+    return {
+      type: TOGGLE_SHOW_LOCK_IN_TYPES,
+    };
+  },
 };
