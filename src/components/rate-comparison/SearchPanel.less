@@ -38,52 +38,52 @@
       }
     }
   }
+}
 
-  .row {
+.row {
+  display: flex;
+  margin: 15px auto;
+  justify-content: stretch;
+  flex-direction: column;
+
+  div.label {
+    padding: 8px 0;
+  }
+
+  .two.columns {
     display: flex;
-    margin: 15px auto;
+    width: 100%;
     justify-content: stretch;
-    flex-direction: column;
 
-    div.label {
-      padding: 8px 0;
+    .text-field:nth-child(1) {
+      border-right: none;
     }
+  }
 
-    .two.columns {
-      display: flex;
-      width: 100%;
-      justify-content: stretch;
+  .purchase-price {
+    width: 60%;
+  }
 
-      .text-field:nth-child(1) {
-        border-right: none;
-      }
+  .purchase-price-percent {
+    width: 40%;
+    flex-direction: row-reverse;
+    padding-left: 10px;
+
+    .symbol {
+      padding-right: 10px;
     }
+  }
 
-    .purchase-price {
-      width: 60%;
+  .duration {
+    flex-direction: row-reverse;
+    padding-left: 10px;
+
+    .symbol {
+      padding-right: 10px;
     }
+  }
 
-    .purchase-price-percent {
-      width: 40%;
-      flex-direction: row-reverse;
-      padding-left: 10px;
-
-      .symbol {
-        padding-right: 10px;
-      }
-    }
-
-    .duration {
-      flex-direction: row-reverse;
-      padding-left: 10px;
-
-      .symbol {
-        padding-right: 10px;
-      }
-    }
-
-    .apply-button {
-      display: none;
-    }
+  .apply-button {
+    display: none;
   }
 }

@@ -39,6 +39,7 @@ const config = {
     port: 3000,
     proxy: {
       '/api': 'http://localhost:8080/',
+      '/osmr/rest/paid/enquire': 'http://www.mortgagekaki.com',
     },
   },
   plugins: [
@@ -49,6 +50,10 @@ const config = {
       {
         from: 'src/bank-logos',
         to: 'bank-logos',
+      },
+      {
+        from: 'robots.txt',
+        to: 'robots.txt',
       },
     ]),
   ],

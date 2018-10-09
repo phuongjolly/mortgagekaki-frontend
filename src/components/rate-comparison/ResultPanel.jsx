@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ReactLoading from 'react-loading';
+import { Link } from 'react-router-dom';
 
 import './ResultPanel.less';
 import formatCurrency, { formatDecimal } from '../common/format';
@@ -60,10 +61,10 @@ function renderItem(item, type) {
             {type === REFINANCE ? 'total savings' : 'total interest'}
           </div>
         </div>
-        <a href="/apply" className="apply button">
+        <Link to={`/search/apply/${item.id}`} className="apply button">
           Apply
           <i className="fa fa-long-arrow-alt-right" />
-        </a>
+        </Link>
       </div>
     </div>
   );
