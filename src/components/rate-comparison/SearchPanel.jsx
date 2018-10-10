@@ -147,19 +147,17 @@ function SearchPanel({
       {!isNew && (
         interests.map((interest, index) => renderInterest(index, interest, setInterestRate))
       )}
-      {!isNew && (
-        <div className="row">
-          <div className="label">Lock In</div>
-          <DropDownList
-            items={LockInTypes}
-            showing={showingLockInTypes}
-            toggle={toggleShowLockInTypes}
-            selectedItem={filter.lockIn}
-            onSelect={lockIn => load({ lockIn })}
-          />
-          <div className="label">Please consider penalty fee, if applicable</div>
-        </div>
-      )}
+      <div className="row">
+        <div className="label">Lock In</div>
+        <DropDownList
+          items={LockInTypes}
+          showing={showingLockInTypes}
+          toggle={toggleShowLockInTypes}
+          selectedItem={filter.lockIn}
+          onSelect={lockIn => load({ lockIn })}
+        />
+        <div className="label">Please consider penalty fee, if applicable</div>
+      </div>
       <div className="row">
         <div className="label">Prefered Loan Type</div>
         {loanTypes.map(item => (

@@ -31,7 +31,7 @@ function renderRate(id, rate) {
           {formatCurrency(rate.monthlyBalance)}
         </b>
         <div className="description">
-          Monthly Installment
+          Instalment
         </div>
       </div>
     </div>

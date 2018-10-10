@@ -157,13 +157,9 @@ export const packageFilterActionCreator = {
       });
 
       try {
-        let endpoint = `/api/v1/packages?type=${encodeURIComponent(newFilter.type)}`
+        const endpoint = `/api/v1/packages?type=${encodeURIComponent(newFilter.type)}`
           + `&propertyType=${encodeURIComponent(newFilter.propertyType)}`
-          + `&loanType=${newFilter.loanType}`;
-
-        if (newFilter.lockIn !== 'Any' && newFilter.type !== 'NEW') {
-          endpoint = `${endpoint}&lockIn=${newFilter.lockIn}`;
-        }
+          + `&loanType=${newFilter.loanType}&lockIn=${newFilter.lockIn}`;
 
         const response = await fetch(endpoint);
 
