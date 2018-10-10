@@ -117,6 +117,7 @@ function ResultPanel({
   toggleFilter,
   interests,
   type,
+  currentBank,
 }) {
   let data = calculateLoans(loanValue, duration, result);
 
@@ -126,7 +127,7 @@ function ResultPanel({
       ...item,
       totalInterest: currentLoan.totalInterest - item.totalInterest,
     })).filter(
-      item => item.totalInterest > 0,
+      item => item.totalInterest > 0 && item.bank.id !== currentBank,
     );
 
     data.sort((a, b) => b.totalInterest - a.totalInterest);
@@ -176,6 +177,7 @@ ResultPanel.propTypes = {
   toggleFilter: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
   interests: PropTypes.arrayOf(PropTypes.number).isRequired,
+  currentBank: PropTypes.string.isRequired,
 };
 
 
