@@ -21,7 +21,7 @@ const INTEREST_TEXT = [
 
 const LockInTypes = [
   {
-    id: 'Any',
+    id: null,
     name: 'Any',
   },
   {

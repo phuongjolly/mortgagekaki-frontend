@@ -18,7 +18,7 @@ const initialState = {
     propertyType: 'HC',
     type: 'NEW',
     loanType: 'FLOAT',
-    lockIn: 'Any',
+    lockIn: null,
   },
 };
 
@@ -157,9 +157,13 @@ export const packageFilterActionCreator = {
       });
 
       try {
-        const endpoint = `/api/v1/packages?type=${encodeURIComponent(newFilter.type)}`
+        let endpoint = `/api/v1/packages?type=${encodeURIComponent(newFilter.type)}`
           + `&propertyType=${encodeURIComponent(newFilter.propertyType)}`
-          + `&loanType=${newFilter.loanType}&lockIn=${newFilter.lockIn}`;
+          + `&loanType=${newFilter.loanType}`;
+
+        if (newFilter.lockIn) {
+          endpoint += `&lockIn=${newFilter.lockIn}`;
+        }
 
         const response = await fetch(endpoint);
 
