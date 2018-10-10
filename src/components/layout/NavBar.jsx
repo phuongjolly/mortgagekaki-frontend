@@ -11,6 +11,17 @@ export default function NavBar() {
           className="logo"
         />
       </div>
+      <div className="actions">
+        <a href="https://www.mortgagekaki.com/">
+          Home
+        </a>
+        <a className="hide-on-mobile" href="https://www.mortgagekaki.com/about-us-2">
+          WHY US
+        </a>
+        <a className="hide-on-mobile" href="https://www.mortgagekaki.com/contact-us">
+          CONTACT US
+        </a>
+      </div>
     </nav>
   );
 }
