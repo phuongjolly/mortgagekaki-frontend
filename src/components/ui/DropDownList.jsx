@@ -29,7 +29,7 @@ export default function DropDownList({
 }) {
   const selectedItemToRender = items.filter(
     item => item.id === selectedItem,
-  )[0];
+  )[0] || {};
 
   return (
     <div className={`${showing && 'active'} dropdown`}>
@@ -40,7 +40,7 @@ export default function DropDownList({
         onClick={toggle}
       >
         <span className="name">
-          {selectedItemToRender.name}
+          {selectedItemToRender.name || '-- Select --'}
         </span>
         <div className="indicator">
           <i className="fa fa-arrow-down" />

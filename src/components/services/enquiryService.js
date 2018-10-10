@@ -1,26 +1,35 @@
+import { LockInTypes } from '../rate-comparison/SearchPanel';
+
 export default async function enquiry(packageId, state) {
   const { name, email, mobile } = state.application;
-  const { packageFilter } = state;
+  const { packageFilter, propertyTypes } = state;
   const {
     filter,
     interests,
     duration,
     result,
     purchasePrice,
+    currentBank,
   } = packageFilter;
   const selectedPackage = result.filter(item => item.id === packageId)[0] || {};
+  const propertyType = propertyTypes.propertyTypes.filter(
+    item => item.id === filter.propertyType,
+  )[0] || {};
+
+  const lockIn = LockInTypes.filter(item => item.id === filter.lockIn)[0] || {};
 
   const data = {
     name,
     email,
     mobile,
     type: filter.type,
-    lockIn: filter.lockIn,
+    lockIn: lockIn.name,
     loanType: filter.loanType,
-    propertyType: filter.propertyType,
+    propertyType: propertyType.name,
     purchasePrice,
     interests,
     duration,
+    currentBank,
     packageName: selectedPackage.name,
   };
 

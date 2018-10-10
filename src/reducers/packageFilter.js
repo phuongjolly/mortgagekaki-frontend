@@ -1,3 +1,5 @@
+import getBanks from '../components/services/bankService';
+
 const MAX_PERCENT = 75;
 
 const initialState = {
@@ -5,9 +7,12 @@ const initialState = {
   loanValue: 750000,
   showingPropertyTypes: false,
   showingLockInTypes: false,
+  showingBanks: false,
   isLoading: false,
   duration: 25,
   result: [],
+  banks: [],
+  currentBank: 'UOB',
   interests: [
     2.8,
     2.8,
@@ -32,6 +37,9 @@ const SET_LOAN_DURATION = 'packageFilter/SetLoanDuration';
 const SET_INTEREST_RATE = 'packageFilter/SetInterestRate';
 const TOGGLE_FILTER = 'packageFilter/toggleFilter';
 const TOGGLE_SHOW_LOCK_IN_TYPES = 'packageFilter/ToggleShowLockInTypes';
+const TOGGLE_SHOW_BANKS = 'packageFilter/ToggleShowBanks';
+const LOAD_BANKS = 'packageFilter/setBanks';
+const SET_CURRENT_BANK = 'packageFilter/setCurrentBank';
 
 /**
  * the package filter reducer
@@ -111,6 +119,13 @@ function packageFilterReducer(state = initialState, action) {
         showingPropertyTypes: !state.showingPropertyTypes,
       };
     }
+
+    case TOGGLE_SHOW_BANKS: {
+      return {
+        ...state,
+        showingBanks: !state.showingBanks,
+      };
+    }
     case TOGGLE_FILTER: {
       return {
         ...state,
@@ -122,6 +137,21 @@ function packageFilterReducer(state = initialState, action) {
       return {
         ...state,
         showingLockInTypes: !state.showingLockInTypes,
+      };
+    }
+
+    case LOAD_BANKS: {
+      return {
+        ...state,
+        banks: action.banks,
+      };
+    }
+
+    case SET_CURRENT_BANK: {
+      return {
+        ...state,
+        currentBank: action.bank,
+        showingBanks: false,
       };
     }
 
@@ -145,6 +175,16 @@ function convertToNumber(value) {
 export const packageFilterActionCreator = {
   load(filter = {}) {
     return async (dispatch, getState) => {
+      let { banks } = getState();
+
+      if (!banks || !banks.length) {
+        banks = await getBanks();
+        dispatch({
+          type: LOAD_BANKS,
+          banks,
+        });
+      }
+
       const olderFilter = getState().packageFilter.filter;
       const newFilter = {
         ...olderFilter,
@@ -234,6 +274,11 @@ export const packageFilterActionCreator = {
       type: TOGGLE_PROPERTY_TYPES,
     };
   },
+  toggleBanks() {
+    return {
+      type: TOGGLE_SHOW_BANKS,
+    };
+  },
   setLoanDuration(durationValue) {
     let duration = parseInt(durationValue, 10);
 
@@ -254,6 +299,12 @@ export const packageFilterActionCreator = {
   toggleShowLockInTypes() {
     return {
       type: TOGGLE_SHOW_LOCK_IN_TYPES,
+    };
+  },
+  setCurrentBank(bank) {
+    return {
+      type: SET_CURRENT_BANK,
+      bank,
     };
   },
 };

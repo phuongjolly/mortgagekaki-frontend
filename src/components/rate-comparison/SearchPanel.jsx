@@ -19,7 +19,7 @@ const INTEREST_TEXT = [
   'Following year\'s Interest Rate',
 ];
 
-const LockInTypes = [
+export const LockInTypes = [
   {
     id: null,
     name: 'Any',
@@ -73,6 +73,11 @@ function SearchPanel({
   toggleFilter,
   showingLockInTypes,
   toggleShowLockInTypes,
+  banks,
+  currentBank,
+  toggleBanks,
+  showingBanks,
+  setCurrentBank,
 }) {
   const loanTypes = ['FIXED', 'FLOAT'];
   let percent = purchasePrice !== 0 ? (100 * loanValue / purchasePrice) : 0;
@@ -106,6 +111,18 @@ function SearchPanel({
           <TextField
             value={formatCurrency(purchasePrice)}
             onChange={setPurchasePrice}
+          />
+        </div>
+      )}
+      {!isNew && (
+        <div className="row">
+          <div className="label">Current Bank</div>
+          <DropDownList
+            items={banks}
+            showing={showingBanks}
+            toggle={toggleBanks}
+            selectedItem={currentBank}
+            onSelect={bank => setCurrentBank(bank)}
           />
         </div>
       )}
@@ -209,6 +226,11 @@ SearchPanel.propTypes = {
   toggleFilter: PropTypes.func.isRequired,
   showingLockInTypes: PropTypes.bool.isRequired,
   toggleShowLockInTypes: PropTypes.func.isRequired,
+  showingBanks: PropTypes.bool.isRequired,
+  banks: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  toggleBanks: PropTypes.func.isRequired,
+  setCurrentBank: PropTypes.func.isRequired,
+  currentBank: PropTypes.string.isRequired,
 };
 
 SearchPanel.defaultProps = {

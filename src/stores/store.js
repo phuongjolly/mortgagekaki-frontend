@@ -4,15 +4,17 @@ import logger from 'redux-logger';
 
 import reducers from '../reducers';
 
+const STATE_DATA = 'state-v1';
+
 function saveToStorage(store) {
   return next => (action) => {
     next(action);
     const state = store.getState();
-    localStorage.setItem('state', JSON.stringify(state));
+    localStorage.setItem(STATE_DATA, JSON.stringify(state));
   };
 }
 
-let oldState = localStorage.getItem('state');
+let oldState = localStorage.getItem(STATE_DATA);
 
 if (oldState != null) {
   try {
