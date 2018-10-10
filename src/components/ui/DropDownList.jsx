@@ -61,8 +61,12 @@ DropDownList.propTypes = {
   items: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
   })).isRequired,
-  selectedItem: PropTypes.string.isRequired,
+  selectedItem: PropTypes.string,
   showing: PropTypes.bool.isRequired,
   toggle: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,
+};
+
+DropDownList.defaultProps = {
+  selectedItem: null,
 };

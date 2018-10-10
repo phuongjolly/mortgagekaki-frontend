@@ -7,6 +7,7 @@ import TextField from '../ui/TextField';
 import { applicationActionCreator } from '../../reducers/application';
 
 function ApplyPage({
+  name,
   email,
   mobile,
   update,
@@ -17,6 +18,15 @@ function ApplyPage({
     <div className="apply-page">
       <h1>Enquire Details</h1>
 
+      <div className="row">
+        <div className="label">Name</div>
+        <TextField
+          value={name}
+          className="name"
+          onChange={value => update('name', value)}
+          symbol=" "
+        />
+      </div>
       <div className="row">
         <div className="label">Email</div>
         <TextField
@@ -61,6 +71,7 @@ function ApplyPage({
 }
 
 ApplyPage.propTypes = {
+  name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   mobile: PropTypes.string.isRequired,
   update: PropTypes.func.isRequired,

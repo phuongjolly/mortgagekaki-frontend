@@ -4,9 +4,41 @@ import logger from 'redux-logger';
 
 import reducers from '../reducers';
 
-const store = createStore(
-  combineReducers(reducers),
-  applyMiddleware(thunk, logger),
-);
+function saveToStorage(store) {
+  return next => (action) => {
+    next(action);
+    const state = store.getState();
+    localStorage.setItem('state', JSON.stringify(state));
+  };
+}
 
+let oldState = localStorage.getItem('state');
+
+if (oldState != null) {
+  try {
+    oldState = JSON.parse(oldState);
+  } catch (e) {
+    console.log('Error parsing saved state', e);
+  }
+}
+
+const reducer = combineReducers(reducers);
+const middleWare = applyMiddleware(thunk, logger, saveToStorage);
+
+let theStore;
+
+if (oldState) {
+  theStore = createStore(
+    reducer,
+    oldState,
+    middleWare,
+  );
+} else {
+  theStore = createStore(
+    reducer,
+    middleWare,
+  );
+}
+
+const store = theStore;
 export default store;

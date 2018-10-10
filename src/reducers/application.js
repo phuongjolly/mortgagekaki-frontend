@@ -1,6 +1,7 @@
-import enquiry from "../components/services/enquiryService";
+import enquiry from '../components/services/enquiryService';
 
 const initialState = {
+  name: '',
   email: '',
   mobile: '',
   isLoading: false,

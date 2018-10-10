@@ -1,33 +1,35 @@
 export default async function enquiry(packageId, state) {
-  const { email, mobile } = state.application;
+  const { name, email, mobile } = state.application;
   const { packageFilter } = state;
-  const { filter } = packageFilter;
+  const {
+    filter,
+    interests,
+    duration,
+    result,
+    purchasePrice,
+  } = packageFilter;
+  const selectedPackage = result.filter(item => item.id === packageId)[0] || {};
 
   const data = {
-    emailId: email,
-    mobileNum: mobile,
-    termsCheckbox: true,
-    type: filter.type === 'NEW' ? 'newLoanAnalysis' : 'refinanceLoanAnalysis',
-    loanPackage: {
-      packageId,
-    },
-    loanInput: {
-      email,
-      loanToValuation: packageFilter.loanValue / packageFilter.purchasePrice,
-      loanType: filter.type,
-      loanValue: packageFilter.loanValue,
-      propertyType: filter.propertyType,
-      purchasePrice: packageFilter.purchasePrice,
-      tenure: packageFilter.duration,
-    },
+    name,
+    email,
+    mobile,
+    type: filter.type,
+    lockIn: filter.lockIn,
+    loanType: filter.loanType,
+    propertyType: filter.propertyType,
+    purchasePrice,
+    interests,
+    duration,
+    packageName: selectedPackage.name,
   };
 
-  const response = await fetch('/osmr/rest/paid/enquire', {
+  const response = await fetch('/api/v1/enquiry', {
     method: 'POST',
     headers: {
-      contentType: 'application/json',
-      body: JSON.stringify(data),
+      'Content-Type': 'application/json',
     },
+    body: JSON.stringify(data),
   });
 
   console.log(response);
