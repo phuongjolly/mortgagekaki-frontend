@@ -101,7 +101,7 @@ function renderHeader(type) {
   );
 }
 
-function renderLoading(type, color) {
+export function renderLoading(type, color) {
   return (
     <div className="loading">
       <ReactLoading type={type} color={color} height={50} width={50} />

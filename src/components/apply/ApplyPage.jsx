@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import './ApplyPage.less';
 import TextField from '../ui/TextField';
 import { applicationActionCreator } from '../../reducers/application';
+import { renderLoading } from '../rate-comparison/ResultPanel';
 
 function ApplyPage({
   name,
@@ -13,7 +14,37 @@ function ApplyPage({
   update,
   apply,
   match,
+  isLoading,
+  isSuccessful,
 }) {
+  if (isLoading) {
+    return (
+      <div className="apply-page">
+        {renderLoading('spinningBubbles', '#20cb7e')}
+      </div>
+    );
+  }
+
+  if (isSuccessful) {
+    return (
+      <div className="apply-page">
+        <h1>Thank you</h1>
+        <div className="row">
+          Your request has been successfully sent.
+          <br />
+          You will be contacted 1-2 days time.
+          <br />
+          Thank you, and have a good day ahead.
+          <br />
+        </div>
+        <div className="apply row">
+          <Link className="cancel button" to="/search/purchase">
+            Back
+          </Link>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="apply-page">
       <h1>Enquire Details</h1>
@@ -77,6 +108,8 @@ ApplyPage.propTypes = {
   update: PropTypes.func.isRequired,
   apply: PropTypes.func.isRequired,
   match: PropTypes.shape({}).isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  isSuccessful: PropTypes.bool.isRequired,
 };
 
 export default connect(

@@ -13,7 +13,7 @@ const UPDATE = 'application/update';
 const APPLY = 'application/apply';
 const APPLY_SUCCESSFUL = 'application/apply/successful';
 const APPLY_FAILED = 'application/apply/failed';
-
+const RESET_STATE = 'packageFilter/SetFilter';
 
 export default function applicationReducer(state = initialState, action) {
   switch (action.type) {
@@ -47,6 +47,14 @@ export default function applicationReducer(state = initialState, action) {
         errorMessage: 'Something wrong. Please try again.',
       };
     }
+    case RESET_STATE: {
+      return {
+        ...state,
+        isLoading: false,
+        isSuccessful: false,
+        errorMessage: null,
+      };
+    }
     default: {
       return state;
     }
@@ -54,6 +62,11 @@ export default function applicationReducer(state = initialState, action) {
 }
 
 export const applicationActionCreator = {
+  resetState() {
+    return {
+      type: RESET_STATE,
+    };
+  },
   update(field, value) {
     return {
       type: UPDATE,
