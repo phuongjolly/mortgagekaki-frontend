@@ -13,7 +13,11 @@ export default function withLoader(Component, load) {
     }
 
     componentWillReceiveProps(newProps) {
-      load(newProps);
+      const { match } = this.props;
+
+      if (newProps.match.url !== match.url) {
+        load(newProps);
+      }
     }
 
     render() {

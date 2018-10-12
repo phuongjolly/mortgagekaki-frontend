@@ -4,7 +4,7 @@ import logger from 'redux-logger';
 
 import reducers from '../reducers';
 
-const STATE_DATA = 'state-v1';
+const STATE_DATA = 'state-v2';
 
 function saveToStorage(store) {
   return next => (action) => {

@@ -241,25 +241,22 @@ function loadData({
   load,
   type,
   filter,
-  isLoading,
   result,
 }) {
-  if (!isLoading) {
-    if (result.length === 0) {
+  if (result.length === 0) {
+    load({
+      type: type === PURCHASE ? 'NEW' : 'BOTH',
+    });
+  } else if (type === PURCHASE) {
+    if (filter.type !== 'NEW') {
       load({
-        type: type === PURCHASE ? 'NEW' : 'BOTH',
-      });
-    } else if (type === PURCHASE) {
-      if (filter.type !== 'NEW') {
-        load({
-          type: 'NEW',
-        });
-      }
-    } else if (filter.type !== 'BOTH') {
-      load({
-        type: 'BOTH',
+        type: 'NEW',
       });
     }
+  } else if (filter.type !== 'BOTH') {
+    load({
+      type: 'BOTH',
+    });
   }
 }
 
