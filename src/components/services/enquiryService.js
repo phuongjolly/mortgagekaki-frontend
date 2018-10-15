@@ -5,11 +5,12 @@ export default async function enquiry(packageId, state) {
   const { packageFilter, propertyTypes } = state;
   const {
     filter,
-    interests,
     duration,
     result,
     purchasePrice,
     currentBank,
+    interests,
+    loanValue,
   } = packageFilter;
   const selectedPackage = result.filter(item => item.id === packageId)[0] || {};
   const propertyType = propertyTypes.propertyTypes.filter(
@@ -30,6 +31,7 @@ export default async function enquiry(packageId, state) {
     interests,
     duration,
     currentBank,
+    loanValue,
     packageName: selectedPackage.name,
   };
 

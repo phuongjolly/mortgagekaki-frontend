@@ -7,6 +7,7 @@ import TextField from '../ui/TextField';
 import { applicationActionCreator } from '../../reducers/application';
 import { renderLoading } from '../rate-comparison/ResultPanel';
 
+
 function ApplyPage({
   name,
   email,
@@ -26,6 +27,9 @@ function ApplyPage({
   }
 
   if (isSuccessful) {
+    window.fbq('track', 'PageView');
+    window.fbq('track', 'Lead');
+
     return (
       <div className="apply-page">
         <h1>Thank you</h1>

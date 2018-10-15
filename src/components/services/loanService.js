@@ -28,7 +28,7 @@ function calculateLoanInterest(loanValue, duration, data) {
   return result;
 }
 
-function calculateLoan(
+export function calculateLoan(
   loanValue,
   duration,
   item,
@@ -65,6 +65,5 @@ export default function calculateLoans(
   duration,
   result,
 ) {
-  const data = result.map(item => calculateLoan(loanValue, duration, item));
-  return data;
+  return result.map(item => calculateLoan(loanValue, duration, item));
 }

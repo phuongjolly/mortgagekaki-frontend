@@ -15,7 +15,7 @@ export default function Footer() {
             </div>
             <div className="phone">
               <i className="fas fa-phone-volume" />
-              <a href="tel:+6531636893">+65-3163-6893</a>
+              <a href="tel:+6597367168">+65-9736-7168</a>
             </div>
           </div>
           <div className="menu">
@@ -45,7 +45,12 @@ export default function Footer() {
         © Copyright 2018| MortgageKaki.com
         </div>
         <div className="term">
-        <a href="http://www.mortgagekaki.com/?page_id=34">Terms of use</a> | <a href="http://www.mortgagekaki.com/?page_id=29">Privacy Policy</a></div>
+          <a href="http://www.mortgagekaki.com/?page_id=34">Terms of use</a>
+          {' '}
+          |
+          {' '}
+          <a href="http://www.mortgagekaki.com/?page_id=29">Privacy Policy</a>
+        </div>
       </div>
     </div>
   );
